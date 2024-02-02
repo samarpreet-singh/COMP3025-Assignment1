@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appBackground"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -24,7 +25,8 @@
             android:fontFamily="@font/fa_solid_900"
             android:gravity="end"
             android:paddingHorizontal="@dimen/px_10"
-            android:text="0"
+            android:paddingBottom="@dimen/px_10"
+            android:text="@string/zero"
             android:textSize="@dimen/resultTextViewFontSize" />
 
     </LinearLayout>
@@ -49,6 +51,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/backspaceRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -61,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/appBackground"
             android:fontFamily="@font/fa_solid_900"
             android:gravity="end"
             android:paddingStart="@dimen/px_10"
@@ -69,6 +72,61 @@
             android:text="@string/back_space"
             android:textColor="@color/black"
             android:textSize="@dimen/backspaceButtonSize" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/firstRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backspaceRow">
+
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:text="C"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSize" />
+
+        <Button
+            android:id="@+id/percentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:text="%"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSize" />
+
+        <Button
+            android:id="@+id/plusMinusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:text="+/-"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSize" />
+
+        <Button
+            android:id="@+id/divideButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:text="/"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSize" />
     </LinearLayout>
 
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CalculatorButton">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">@drawable/round_button</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:text">Click me</item>
+    </style>
+</resources>
