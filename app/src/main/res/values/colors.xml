@@ -5,4 +5,5 @@
     <color name="numberButtonsBackground">#B0ECF7</color>
     <color name="operatorButtonsBackground">#238FA0</color>
     <color name="appBackground">#58ACEC</color>
+    <color name="equalsButtonBackground">#4488CD</color>
 </resources>
