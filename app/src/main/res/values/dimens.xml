@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="resultTextViewFontSize">60sp</dimen>
+    <dimen name="backspaceButtonSize">50sp</dimen>
     <dimen name="px_10">10dp</dimen>
+    <dimen name="px_15">15dp</dimen>
+    <dimen name="px_20">20dp</dimen>
+    <dimen name="dividerHeight">1dp</dimen>
 </resources>

@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/firstRow"
+        android:id="@+id/resultsRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -21,12 +21,55 @@
             android:id="@+id/resultTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/fa_solid_900"
             android:gravity="end"
             android:paddingHorizontal="@dimen/px_10"
             android:text="0"
             android:textSize="@dimen/resultTextViewFontSize" />
+
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/dividerRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/px_20"
+        android:paddingEnd="@dimen/px_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resultsRow">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/screen_background_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerRow">
+
+        <Button
+            android:id="@+id/backspaceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/fa_solid_900"
+            android:gravity="end"
+            android:paddingStart="@dimen/px_10"
+            android:paddingEnd="@dimen/px_20"
+            android:text="@string/back_space"
+            android:textColor="@color/black"
+            android:textSize="@dimen/backspaceButtonSize" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
