@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">COMP3025-Assignment1</string>
     <string name="clear">\u0043</string>
+    <string name="clearLandscape">\u0041\u0043</string>
     <string name="percent">\u0025</string>
     <string name="back_space">\uF55A</string>
     <string name="divide">\uF529</string>
@@ -20,4 +21,12 @@
     <string name="seven">\u0037</string>
     <string name="eight">\u0038</string>
     <string name="nine">\u0039</string>
+    <string name="ln">\u004C \u004E</string>
+    <string name="xFactorial">\uF00D\u0021</string>
+    <string name="xModulus">|\uF00D|</string>
+    <string name="log">log</string>
+    <string name="brackets">()</string>
+    <string name="secondButton">2nd</string>
+    <string name="xSquare">x^2</string>
+    <string name="eX">eX</string>
 </resources>

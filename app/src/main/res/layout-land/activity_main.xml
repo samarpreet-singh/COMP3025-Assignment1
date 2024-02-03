@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/resultsRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05">
+
+        <TextView
+            android:id="@+id/resultTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fa_solid_900"
+            android:gravity="end"
+            android:paddingHorizontal="@dimen/px_10"
+            android:paddingBottom="@dimen/px_10"
+            android:tag="result"
+            android:text="@string/zero"
+            android:textColor="@color/black"
+            android:textSize="@dimen/resultTextViewFontSizeLandscape" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dividerRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/px_20"
+        android:paddingEnd="@dimen/px_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resultsRow">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/screen_background_light"
+            android:tag="divider" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backspaceRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerRow">
+
+        <Button
+            android:id="@+id/backspaceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginBackspaceBottom"
+            android:layout_weight="1"
+            android:backgroundTint="@color/appBackground"
+            android:fontFamily="@font/fa_solid_900"
+            android:gravity="end"
+            android:paddingStart="@dimen/px_10"
+            android:paddingEnd="@dimen/px_20"
+            android:tag="backspace"
+            android:text="@string/back_space"
+            android:textColor="@color/black"
+            android:textSize="@dimen/backspaceButtonSizeLandscape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/firstRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/secondRow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backspaceRow">
+
+        <Button
+            android:id="@+id/bracketsButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="1"
+            android:text="@string/brackets"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/logButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="1"
+            android:text="@string/log"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/modulusButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="1"
+            android:text="@string/xModulus"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/piButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="1"
+            android:text="@string/xFactorial"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/clearButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:text="@string/clearLandscape"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/sevenButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="7"
+            android:text="@string/seven"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/eightButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="8"
+            android:text="@string/eight"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/nineButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="9"
+            android:text="@string/nine"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/divideButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:text="@string/divide"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/secondRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstRow"
+        app:layout_constraintBottom_toTopOf="@+id/thirdRow">
+
+        <Button
+            android:id="@+id/fourButton5"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/secondButton"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton4"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/xSquare"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton3"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/eX"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton2"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/percentButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:text="@string/percent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/fourButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fiveButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="5"
+            android:text="@string/five"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/sixButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="6"
+            android:text="@string/six"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/multiplyButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="multiply"
+            android:text="@string/multiply"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/thirdRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secondRow"
+        app:layout_constraintBottom_toTopOf="@+id/fourthRow">
+
+        <Button
+            android:id="@+id/fourButton9"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton8"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton7"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton6"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/lnButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="1"
+            android:text="@string/ln"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/oneButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="1"
+            android:text="@string/one"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/twoButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="2"
+            android:text="@string/two"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/threeButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="3"
+            android:text="@string/three"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/subtractButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="subtract"
+            android:text="@string/subtract"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fourthRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thirdRow"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/fourButton13"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton12"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton11"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/fourButton10"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="4"
+            android:text="@string/four"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/plusMinusButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:text="@string/plus_minus"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/zeroButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="0"
+            android:text="@string/zero"
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape" />
+
+        <Button
+            android:id="@+id/decimalButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/numberButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="."
+            android:text="."
+            android:textColor="@color/black"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/equalsButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/equalsButtonBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="="
+            android:text="@string/equals"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/addButton"
+            style="@style/CalculatorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mx_10"
+            android:layout_marginStart="@dimen/mx_2"
+            android:layout_marginEnd="@dimen/mx_2"
+            android:layout_weight="1"
+            android:backgroundTint="@color/operatorButtonsBackground"
+            android:minWidth="@dimen/minWidthButtonLandscape"
+            android:minHeight="@dimen/minHeightButtonLandscape"
+            android:tag="add"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buttonIconSizeLandscape"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
