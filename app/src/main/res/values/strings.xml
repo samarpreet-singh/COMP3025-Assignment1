@@ -33,7 +33,7 @@
     <string name="oneUponX">\u0031\u2044\u0078</string>
     <string name="squareRoot">\u0032\u221A\u0078</string>
     <string name="cubeRoot">\u0033\u221A\u0078</string>
-    <string name="customRoot">\u0078\u221A\u0079</string>
+    <string name="customRoot">\u0079\u221A\u0078</string>
     <string name="radButton">\u0052\u0061\u0064</string>
     <string name="sinButton">\u0073\u0069\u006E</string>
     <string name="cosButton">\u0063\u006F\u0073</string>
