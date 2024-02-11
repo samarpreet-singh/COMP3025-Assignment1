@@ -20,10 +20,19 @@ package ca.georgiancollege.comp3025_assignment1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ca.georgiancollege.comp3025_assignment1.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+class MainActivity : AppCompatActivity()
+{
+    private lateinit var binding: ActivityMainBinding // this main binding is a generated class inside our package check the import above
+    private lateinit var calculator: Calculator // lateinit tells kotlin I will initialize it somewhere else but not here!!!
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        calculator = Calculator(binding) // no new keyword in kotlin. This instantiates an object of type calculator
     }
 }

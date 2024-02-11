@@ -98,6 +98,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/numberAndExtraButtonsBackground"
             android:text="@string/clear"
+            android:tag="clear"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -110,6 +111,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/operatorButtonsBackground"
             android:text="@string/percent"
+            android:tag="percent"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -122,6 +124,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/operatorButtonsBackground"
             android:text="@string/plus_minus"
+            android:tag="plus_minus"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -134,6 +137,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/operatorButtonsBackground"
             android:text="@string/divide"
+            android:tag="divide"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>
