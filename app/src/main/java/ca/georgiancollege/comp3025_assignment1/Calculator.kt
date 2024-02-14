@@ -2,6 +2,7 @@ package ca.georgiancollege.comp3025_assignment1
 
 import android.view.View
 import ca.georgiancollege.comp3025_assignment1.databinding.ActivityMainBinding
+import java.math.BigDecimal
 
 class Calculator(binding: ActivityMainBinding)
 {
@@ -16,6 +17,12 @@ class Calculator(binding: ActivityMainBinding)
         initializeOnClickListeners()
     }
 
+    private val unicodeAdd: String = this.m_binding.addButton.text.toString()
+    private val unicodeSubtract: String = this.m_binding.subtractButton.text.toString()
+    private val unicodeMultiply: String = this.m_binding.multiplyButton.text.toString()
+    private val unicodeDivide: String = this.m_binding.divideButton.text.toString()
+    private val unicodePercent: String = this.m_binding.percentButton.text.toString()
+
     private fun initializeOnClickListeners()
     {
         // operator buttons
@@ -23,12 +30,13 @@ class Calculator(binding: ActivityMainBinding)
         this.m_binding.divideButton.setOnClickListener { view -> processOperatorButtons(view) }
         this.m_binding.addButton.setOnClickListener { view -> processOperatorButtons(view) }
         this.m_binding.subtractButton.setOnClickListener { view -> processOperatorButtons(view) }
+        this.m_binding.percentButton.setOnClickListener { view -> processOperatorButtons(view) }
 
         // extra buttons
         this.m_binding.clearButton.setOnClickListener { view -> processExtraButtons(view) }
-        this.m_binding.percentButton.setOnClickListener { view -> processExtraButtons(view) }
         this.m_binding.backspaceButton.setOnClickListener { view -> processExtraButtons(view) }
         this.m_binding.plusMinusButton.setOnClickListener { view -> processExtraButtons(view) }
+        this.m_binding.equalsButton.setOnClickListener { view -> processExtraButtons(view) }
 
         // number buttons
         this.m_binding.zeroButton.setOnClickListener { view -> processNumberButtons(view) }
@@ -46,7 +54,32 @@ class Calculator(binding: ActivityMainBinding)
 
     private fun processOperatorButtons(view: View)
     {
+        if (this.m_resultLabelValue.isNotEmpty())
+        {
 
+            val operator = when (view.tag.toString())
+            {
+                "add" -> m_binding.addButton.text
+                "multiply" -> m_binding.multiplyButton.text
+                "divide" -> m_binding.divideButton.text
+                "subtract" -> m_binding.subtractButton.text
+                "percent" -> m_binding.percentButton.text
+                else -> ""
+            }
+
+            if (operator.isNotEmpty())
+            {
+                if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]$")))
+                {
+                    this.m_resultLabelValue = this.m_resultLabelValue.dropLast(1)
+                }
+
+                this.m_resultLabelValue += operator
+                this.m_binding.resultTextView.text = this.m_resultLabelValue
+
+            }
+
+        }
     }
 
     private fun processExtraButtons(view: View)
@@ -85,43 +118,22 @@ class Calculator(binding: ActivityMainBinding)
                     this.m_binding.resultTextView.text = this.m_resultLabelValue
                 }
             }
-        }
-
-        /*
-        "clear" -> {
-            this.m_binding.resultTextView.text = "0"
-            this.m_resultLabelValue = ""
-        }
-
-        "backspace" -> {
-            if (this.m_binding.resultTextView.text.length == 1)
+            "=" ->
             {
-                this.m_binding.resultTextView.text = "0"
-                this.m_resultLabelValue = ""
-            } else
-            {
-                this.m_binding.resultTextView.text = this.m_binding.resultTextView.text.dropLast(1)
+                if (this.m_resultLabelValue.isNotEmpty())
+                {
+                    val cleanedExpression = this.m_resultLabelValue.replace(unicodeAdd, " + ")
+                        .replace(unicodeDivide, " / ")
+                        .replace(unicodeMultiply, " * ")
+                        .replace(unicodeSubtract, " - ")
+                        .replace(unicodePercent, " % ")
+
+
+
+                    calculate(cleanedExpression)
+                }
             }
         }
-
-        "plus_minus" -> {
-            if (!this.m_binding.resultTextView.text.toString().contains("-"))
-            {
-                this.m_binding.resultTextView.text = "-" + this.m_binding.resultTextView.text
-            }
-            else
-            {
-                this.m_binding.resultTextView.text = this.m_binding.resultTextView.text.substring(1)
-            }
-
-            /*val numericValue = this.m_binding.resultTextView.text.toString().toDoubleOrNull()
-
-            if (numericValue != null)
-            {
-                this.m_binding.resultTextView.text = (-numericValue).toString()
-            }*/
-        }
-    }*/
     }
 
     private fun processNumberButtons(view: View)
@@ -148,4 +160,26 @@ class Calculator(binding: ActivityMainBinding)
 
         this.m_binding.resultTextView.text = this.m_resultLabelValue
     }
+
+
+    private fun calculate(expression: String): List<String>
+    {
+        val expressionElements = expression.split(" ")
+        var finalExpression : BigDecimal
+
+        if (expressionElements.contains("/"))
+        {
+            var operatorIndex = expressionElements.indexOf("/")
+            var operandOne = expressionElements[operatorIndex - 1]
+            var operandTwo = expressionElements[operatorIndex + 1]
+
+        }
+
+        for (i in 0..expressionElements.size step 1)
+        {
+           finalExpression = finalExpression + expressionElements[i].toBigDecimal()
+        }
+
+    }
+
 }

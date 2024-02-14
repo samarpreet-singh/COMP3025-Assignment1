@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="resultTextViewFontSize">60sp</dimen>
+    <dimen name="resultTextViewFontSize">30sp</dimen>
     <dimen name="backspaceButtonSize">50sp</dimen>
     <dimen name="px_10">10dp</dimen>
     <dimen name="mx_10">10dp</dimen>
