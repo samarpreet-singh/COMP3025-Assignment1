@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.View
 import ca.georgiancollege.comp3025_assignment1.databinding.ActivityMainBinding
 import java.lang.IllegalArgumentException
-import java.math.BigDecimal
 import java.util.Stack
 
 class Calculator(binding: ActivityMainBinding)
@@ -72,7 +71,7 @@ class Calculator(binding: ActivityMainBinding)
 
             if (operator.isNotEmpty())
             {
-                if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]$")))
+                if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
                 {
                     this.m_resultLabelValue = this.m_resultLabelValue.dropLast(1)
                 }
@@ -124,7 +123,7 @@ class Calculator(binding: ActivityMainBinding)
             "=" ->
             {
                 if (this.m_resultLabelValue.isNotEmpty() &&
-                    !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]$")))
+                    !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
                 {
                     val cleanedExpression = this.m_resultLabelValue.replace(unicodeAdd, " + ")
                         .replace(unicodeDivide, " / ")
@@ -174,7 +173,7 @@ class Calculator(binding: ActivityMainBinding)
 
     /* Evaluation function chain begins */
 
-    private fun evaluateExpression(expression: String): BigDecimal {
+    private fun evaluateExpression(expression: String): Double {
         val postfixExpression = infixToPostfix(expression)
         return evaluatePostfix(postfixExpression)
     }
@@ -209,15 +208,15 @@ class Calculator(binding: ActivityMainBinding)
         return output
     }
 
-    private fun evaluatePostfix(postfixExpression: List<String>): BigDecimal
+    private fun evaluatePostfix(postfixExpression: List<String>): Double
     {
-        val stack = Stack<BigDecimal>()
+        val stack = Stack<Double>()
 
         for (element in postfixExpression)
         {
             if (isNumeric(element))
             {
-                stack.push(element.toBigDecimal())
+                stack.push(element.toDouble())
             }
             else if (isOperator(element))
             {
@@ -233,10 +232,9 @@ class Calculator(binding: ActivityMainBinding)
 
 
 
-    private fun performOperation(leftOperand: BigDecimal, operator: String, rightOperand: BigDecimal): BigDecimal
+    private fun performOperation(leftOperand: Double, operator: String, rightOperand: Double): Double
     {
-       return when (operator)
-        {
+        val result: Double = when (operator) {
             "+" -> leftOperand + rightOperand
             "-" -> leftOperand - rightOperand
             "*" -> leftOperand * rightOperand
@@ -244,6 +242,9 @@ class Calculator(binding: ActivityMainBinding)
             // % will be handled later as it is tough to implement, still need to play around with it in my phone calculator before I try to implement it
             else -> throw IllegalArgumentException("Invalid operator: $operator")
         }
+
+        // Need to account for precision loss because of big decimal and account for 8 point accuracy as per requirements
+        return result
     }
 
 
@@ -251,7 +252,7 @@ class Calculator(binding: ActivityMainBinding)
 
 
     private fun isNumeric(expression: String): Boolean {
-        return expression.toBigDecimalOrNull() != null
+        return expression.toDoubleOrNull() != null
     }
 
     private fun isOperator(expression: String): Boolean {
