@@ -208,7 +208,8 @@ class Calculator(binding: ActivityMainBinding)
             {
                 val rightOperand = stack.pop()
                 val leftOperand = stack.pop()
-                val result = // need to perform the operation here
+                val result = performOperation(leftOperand, element, rightOperand)// need to perform the operation here
+                stack.push(result)
             }
         }
     }
@@ -218,9 +219,14 @@ class Calculator(binding: ActivityMainBinding)
     private fun performOperation(leftOperand: BigDecimal, operator: String, rightOperand: BigDecimal): BigDecimal
     {
        return when (operator)
-       {
-
-       }
+        {
+            "+" -> leftOperand + rightOperand
+            "-" -> leftOperand - rightOperand
+            "*" -> leftOperand * rightOperand
+            "/" -> leftOperand / rightOperand
+            // % will be handled later as it is tough to implement, still need to play around with it in my phone calculator before I try to implement it
+            else -> throw IllegalArgumentException("Invalid operator: $operator")
+        }
     }
 
 
