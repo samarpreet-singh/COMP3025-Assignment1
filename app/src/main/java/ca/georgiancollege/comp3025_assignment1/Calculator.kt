@@ -3,6 +3,7 @@ package ca.georgiancollege.comp3025_assignment1
 import android.view.View
 import ca.georgiancollege.comp3025_assignment1.databinding.ActivityMainBinding
 import java.math.BigDecimal
+import java.util.Stack
 
 class Calculator(binding: ActivityMainBinding)
 {
@@ -129,8 +130,6 @@ class Calculator(binding: ActivityMainBinding)
                         .replace(unicodePercent, " % ")
 
 
-
-                    calculate(cleanedExpression)
                 }
             }
         }
@@ -162,24 +161,40 @@ class Calculator(binding: ActivityMainBinding)
     }
 
 
-    private fun calculate(expression: String): List<String>
+    /* Evaluation function chain begins */
+    private fun infixToPostfix(infixExpression: String): List<String>
     {
-        val expressionElements = expression.split(" ")
-        var finalExpression : BigDecimal
+        val output = mutableListOf<String>()
+        val stack = Stack<String>()
 
-        if (expressionElements.contains("/"))
+        val splitInfixExpressionList = infixExpression.split(" ")
+
+        for (element in splitInfixExpressionList)
         {
-            var operatorIndex = expressionElements.indexOf("/")
-            var operandOne = expressionElements[operatorIndex - 1]
-            var operandTwo = expressionElements[operatorIndex + 1]
+            when
+            {
+                isNumeric(element) -> output.add(element)
 
+                isOperator(element) ->
+                {
+                    while (stack.isNotEmpty() && stack.peek())
+                }
+            }
         }
-
-        for (i in 0..expressionElements.size step 1)
-        {
-           finalExpression = finalExpression + expressionElements[i].toBigDecimal()
-        }
-
     }
+
+
+
+
+
+
+    private fun isNumeric(expression: String): Boolean {
+        return expression.toDoubleOrNull() != null
+    }
+
+    private fun isOperator(expression: String): Boolean {
+        return expression.matches(Regex("[+\\-*/%]"))
+    }
+
 
 }
