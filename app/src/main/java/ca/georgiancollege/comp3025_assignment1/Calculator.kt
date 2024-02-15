@@ -129,6 +129,8 @@ class Calculator(binding: ActivityMainBinding)
                         .replace(unicodeSubtract, " - ")
                         .replace(unicodePercent, " % ")
 
+                    // for debugging
+                    this.m_binding.resultTextView.text = infixToPostfix(cleanedExpression).toString()
 
                 }
             }
@@ -174,14 +176,26 @@ class Calculator(binding: ActivityMainBinding)
             when
             {
                 isNumeric(element) -> output.add(element)
-
-                isOperator(element) ->
-                {
-                    while (stack.isNotEmpty() && stack.peek())
+                isOperator(element) -> {
+                    while (stack.isNotEmpty() && isOperator(stack.peek()) &&
+                        (precedenceChecker(element) <= precedenceChecker(stack.peek()))
+                    ) {
+                        output.add(stack.pop())
+                    }
+                    stack.push(element)
                 }
             }
         }
+
+        while (stack.isNotEmpty()) {
+            output.add(stack.pop())
+        }
+
+        return output
     }
+
+
+
 
 
 
@@ -194,6 +208,17 @@ class Calculator(binding: ActivityMainBinding)
 
     private fun isOperator(expression: String): Boolean {
         return expression.matches(Regex("[+\\-*/%]"))
+    }
+
+    private fun precedenceChecker(expression: String): Int
+    {
+        return when (expression)
+        {
+            "+", "-" -> 1
+            "*", "/" -> 2
+            "%" -> 3 // % will be handled later. here it is not modulus, it is Percentage! So effectively means we are multiplying by 0.01, and it needs to be performed first
+            else -> 0
+        }
     }
 
 
