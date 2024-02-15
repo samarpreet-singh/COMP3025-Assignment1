@@ -2,6 +2,7 @@ package ca.georgiancollege.comp3025_assignment1
 
 import android.view.View
 import ca.georgiancollege.comp3025_assignment1.databinding.ActivityMainBinding
+import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.util.Stack
 
@@ -194,9 +195,33 @@ class Calculator(binding: ActivityMainBinding)
         return output
     }
 
+    private fun evaluatePostfix(postfixExpression: List<String>): BigDecimal {
+        val stack = Stack<BigDecimal>()
+
+        for (element in postfixExpression)
+        {
+            if (isNumeric(element))
+            {
+                stack.push(element.toBigDecimal())
+            }
+            else if (isOperator(element))
+            {
+                val rightOperand = stack.pop()
+                val leftOperand = stack.pop()
+                val result = // need to perform the operation here
+            }
+        }
+    }
 
 
 
+    private fun performOperation(leftOperand: BigDecimal, operator: String, rightOperand: BigDecimal): BigDecimal
+    {
+       return when (operator)
+       {
+
+       }
+    }
 
 
 
