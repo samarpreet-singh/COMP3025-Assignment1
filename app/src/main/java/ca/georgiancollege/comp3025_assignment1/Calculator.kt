@@ -14,7 +14,7 @@ class Calculator(binding: ActivityMainBinding)
     init
     {
         this.m_binding = binding
-        this.m_resultLabelValue = ""
+        this.m_resultLabelValue = "0"
 
         initializeOnClickListeners()
     }
@@ -56,31 +56,25 @@ class Calculator(binding: ActivityMainBinding)
 
     private fun processOperatorButtons(view: View)
     {
-        if (this.m_resultLabelValue.isNotEmpty())
+        val operator = when (view.tag.toString())
         {
+            "add" -> m_binding.addButton.text
+            "multiply" -> m_binding.multiplyButton.text
+            "divide" -> m_binding.divideButton.text
+            "subtract" -> m_binding.subtractButton.text
+            "percent" -> m_binding.percentButton.text
+            else -> ""
+        }
 
-            val operator = when (view.tag.toString())
+        if (operator.isNotEmpty())
+        {
+            if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
             {
-                "add" -> m_binding.addButton.text
-                "multiply" -> m_binding.multiplyButton.text
-                "divide" -> m_binding.divideButton.text
-                "subtract" -> m_binding.subtractButton.text
-                "percent" -> m_binding.percentButton.text
-                else -> ""
+                this.m_resultLabelValue = this.m_resultLabelValue.dropLast(1)
             }
 
-            if (operator.isNotEmpty())
-            {
-                if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
-                {
-                    this.m_resultLabelValue = this.m_resultLabelValue.dropLast(1)
-                }
-
-                this.m_resultLabelValue += operator
-                this.m_binding.resultTextView.text = this.m_resultLabelValue
-
-            }
-
+            this.m_resultLabelValue += operator
+            this.m_binding.resultTextView.text = this.m_resultLabelValue
         }
     }
 
@@ -95,14 +89,14 @@ class Calculator(binding: ActivityMainBinding)
 
                 if (this.m_resultLabelValue.isEmpty() || this.m_resultLabelValue == "-") // KOTLIN IS TYPE SAFE IT WILL IGNORE AN ERROR
                 {
-                    this.m_resultLabelValue = ""
+                    this.m_resultLabelValue = "0"
                     this.m_binding.resultTextView.text = "0"
                 }
 
             }
             "clear" ->
             {
-                this.m_resultLabelValue =""
+                this.m_resultLabelValue ="0"
                 this.m_binding.resultTextView.text = "0"
             }
             "plus_minus" ->
@@ -125,11 +119,7 @@ class Calculator(binding: ActivityMainBinding)
                 if (this.m_resultLabelValue.isNotEmpty() &&
                     !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
                 {
-                    val cleanedExpression = this.m_resultLabelValue.replace(unicodeAdd, " + ")
-                        .replace(unicodeDivide, " / ")
-                        .replace(unicodeMultiply, " * ")
-                        .replace(unicodeSubtract, " - ")
-                        .replace(unicodePercent, " % ")
+                    val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
 
                     // for debugging
                     //this.m_binding.resultTextView.text = infixToPostfix(cleanedExpression).toString()
@@ -139,7 +129,7 @@ class Calculator(binding: ActivityMainBinding)
                 }
                 else
                 {
-                    Log.i("Operator Ending", "Invalid expression: Expression cannot end with an operator!")
+                    Log.e("Operator Ending", "Invalid expression: Expression cannot end with an operator!")
                 }
             }
         }
@@ -147,27 +137,48 @@ class Calculator(binding: ActivityMainBinding)
 
     private fun processNumberButtons(view: View)
     {
+        val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
+        val lastElement = if (cleanedExpression.isNotEmpty()) cleanedExpression.split(" ").last() else ""
+
         when (view.tag.toString())
         {
-            "." -> {
-                if(!this.m_resultLabelValue.contains("."))
+            "0" ->
+            {
+                if (this.m_binding.resultTextView.text == "0")
                 {
-                    if (this.m_resultLabelValue.isEmpty())
-                    {
-                        this.m_resultLabelValue = "0."
-                    }
-                    else
-                    {
-                        this.m_resultLabelValue += view.tag.toString()
-                    }
+                    this.m_resultLabelValue = "0"
+                    this.m_binding.resultTextView.text = this.m_resultLabelValue
+                }
+                else if (lastElement == "0")
+                {
+                    Log.e("Last Element Zero", "The last element in the expression cannot be multiple zeroes!")
+                }
+                else
+                {
+                    this.m_resultLabelValue += view.tag.toString()
+                }
+            }
+            "." -> {
+                if(!lastElement.contains("."))
+                {
+                    this.m_resultLabelValue += view.tag.toString()
                 }
             }
             else -> {
-                this.m_resultLabelValue += view.tag.toString()
+                if (this.m_binding.resultTextView.text == "0")
+                {
+                    this.m_resultLabelValue = view.tag.toString()
+                }
+                else
+                {
+                    this.m_resultLabelValue += view.tag.toString()
+                }
             }
         }
 
+
         this.m_binding.resultTextView.text = this.m_resultLabelValue
+        println(this.m_resultLabelValue)
     }
 
 
@@ -268,6 +279,15 @@ class Calculator(binding: ActivityMainBinding)
             "%" -> 3 // % will be handled later. here it is not modulus, it is Percentage! So effectively means we are multiplying by 0.01, and it needs to be performed first
             else -> 0
         }
+    }
+
+    private fun unicodeOperatorsFormatter(expression: String): String
+    {
+        return expression.replace(unicodeAdd, " + ")
+            .replace(unicodeDivide, " / ")
+            .replace(unicodeMultiply, " * ")
+            .replace(unicodeSubtract, " - ")
+            .replace(unicodePercent, " % ")
     }
 
 
