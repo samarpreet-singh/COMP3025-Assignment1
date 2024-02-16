@@ -68,7 +68,7 @@ class Calculator(binding: ActivityMainBinding)
 
         if (operator.isNotEmpty())
         {
-            if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
+            if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
             {
                 this.m_resultLabelValue = this.m_resultLabelValue.dropLast(1)
             }
@@ -181,7 +181,7 @@ class Calculator(binding: ActivityMainBinding)
 
         this.m_binding.resultTextView.text = this.m_resultLabelValue
         println(this.m_resultLabelValue)
-        showIntermediateResult()
+
     }
 
 
@@ -258,7 +258,6 @@ class Calculator(binding: ActivityMainBinding)
             "*" -> leftOperand * rightOperand
             "/" -> leftOperand / rightOperand
             "%" -> leftOperand * 0.01
-            // % will be handled later as it is tough to implement, still need to play around with it in my phone calculator before I try to implement it
             else -> throw IllegalArgumentException("Invalid operator: $operator")
         }
 
@@ -299,7 +298,7 @@ class Calculator(binding: ActivityMainBinding)
 
     private fun showIntermediateResult() {
         if (this.m_resultLabelValue.isNotEmpty() &&
-            !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
+            !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
         {
             val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
             this.m_binding.resultTextView.text = evaluateExpression(cleanedExpression).toString()
