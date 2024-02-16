@@ -58,11 +58,11 @@ class Calculator(binding: ActivityMainBinding)
     {
         val operator = when (view.tag.toString())
         {
-            "add" -> m_binding.addButton.text
-            "multiply" -> m_binding.multiplyButton.text
-            "divide" -> m_binding.divideButton.text
-            "subtract" -> m_binding.subtractButton.text
-            "percent" -> m_binding.percentButton.text
+            "add" -> this.m_binding.addButton.text
+            "multiply" -> this.m_binding.multiplyButton.text
+            "divide" -> this.m_binding.divideButton.text
+            "subtract" -> this.m_binding.subtractButton.text
+            "percent" -> this.m_binding.percentButton.text
             else -> ""
         }
 
@@ -75,6 +75,8 @@ class Calculator(binding: ActivityMainBinding)
 
             this.m_resultLabelValue += operator
             this.m_binding.resultTextView.text = this.m_resultLabelValue
+
+            showIntermediateResult()
         }
     }
 
@@ -117,7 +119,7 @@ class Calculator(binding: ActivityMainBinding)
             "=" ->
             {
                 if (this.m_resultLabelValue.isNotEmpty() &&
-                    !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
+                    !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
                 {
                     val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
 
@@ -179,6 +181,7 @@ class Calculator(binding: ActivityMainBinding)
 
         this.m_binding.resultTextView.text = this.m_resultLabelValue
         println(this.m_resultLabelValue)
+        showIntermediateResult()
     }
 
 
@@ -221,7 +224,7 @@ class Calculator(binding: ActivityMainBinding)
 
     private fun evaluatePostfix(postfixExpression: List<String>): Double
     {
-        val stack = Stack<Double>()
+        val stack = Stack<Double>() // stack plays a different role here than infixToPostfix
 
         for (element in postfixExpression)
         {
@@ -231,7 +234,11 @@ class Calculator(binding: ActivityMainBinding)
             }
             else if (isOperator(element))
             {
-                val rightOperand = stack.pop()
+                var rightOperand: Double = 0.0
+                if (element != "%")
+                {
+                rightOperand = stack.pop()
+                }
                 val leftOperand = stack.pop()
                 val result = performOperation(leftOperand, element, rightOperand)// need to perform the operation here
                 stack.push(result)
@@ -250,6 +257,7 @@ class Calculator(binding: ActivityMainBinding)
             "-" -> leftOperand - rightOperand
             "*" -> leftOperand * rightOperand
             "/" -> leftOperand / rightOperand
+            "%" -> leftOperand * 0.01
             // % will be handled later as it is tough to implement, still need to play around with it in my phone calculator before I try to implement it
             else -> throw IllegalArgumentException("Invalid operator: $operator")
         }
@@ -275,8 +283,7 @@ class Calculator(binding: ActivityMainBinding)
         return when (expression)
         {
             "+", "-" -> 1
-            "*", "/" -> 2
-            "%" -> 3 // % will be handled later. here it is not modulus, it is Percentage! So effectively means we are multiplying by 0.01, and it needs to be performed first
+            "*", "/", "%" -> 2
             else -> 0
         }
     }
@@ -288,6 +295,15 @@ class Calculator(binding: ActivityMainBinding)
             .replace(unicodeMultiply, " * ")
             .replace(unicodeSubtract, " - ")
             .replace(unicodePercent, " % ")
+    }
+
+    private fun showIntermediateResult() {
+        if (this.m_resultLabelValue.isNotEmpty() &&
+            !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide$unicodePercent]\\s*$")))
+        {
+            val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
+            this.m_binding.resultTextView.text = evaluateExpression(cleanedExpression).toString()
+        }
     }
 
 
