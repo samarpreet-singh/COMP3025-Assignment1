@@ -76,7 +76,9 @@ class Calculator(binding: ActivityMainBinding)
             this.m_resultLabelValue += operator
             this.m_binding.resultTextView.text = this.m_resultLabelValue
 
-            showIntermediateResult()
+            performCalculations()
+
+            println("Operator: " + this.m_resultLabelValue)
         }
     }
 
@@ -118,21 +120,7 @@ class Calculator(binding: ActivityMainBinding)
             }
             "=" ->
             {
-                if (this.m_resultLabelValue.isNotEmpty() &&
-                    !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
-                {
-                    val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
-
-                    // for debugging
-                    //this.m_binding.resultTextView.text = infixToPostfix(cleanedExpression).toString()
-
-                    //testing
-                    this.m_binding.resultTextView.text = evaluateExpression(cleanedExpression).toString()
-                }
-                else
-                {
-                    Log.e("Operator Ending", "Invalid expression: Expression cannot end with an operator!")
-                }
+                performCalculations()
             }
         }
     }
@@ -180,12 +168,40 @@ class Calculator(binding: ActivityMainBinding)
 
 
         this.m_binding.resultTextView.text = this.m_resultLabelValue
-        println(this.m_resultLabelValue)
+        println("Number: " + this.m_resultLabelValue)
 
     }
 
-
     /* Evaluation function chain begins */
+    private fun performCalculations(){
+        if (this.m_resultLabelValue.isNotEmpty() &&
+            !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
+        {
+            val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
+
+            // for debugging
+            //this.m_binding.resultTextView.text = infixToPostfix(cleanedExpression).toString()
+
+            //testing
+            this.m_resultLabelValue = evaluateExpression(cleanedExpression).toString()
+            this.m_binding.resultTextView.text = this.m_resultLabelValue
+        }
+        else if (this.m_resultLabelValue.isNotEmpty() &&
+            this.m_binding.resultTextView.text.matches(Regex(".*[0-9]+[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide][0-9]+.*")))
+        {
+            val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
+
+            var realtimeEvaluationString = cleanedExpression.dropLast(2) // drop the most recently pressed operator for evaluating the string before that
+            println("Realtime String: " + realtimeEvaluationString)
+
+            this.m_binding.resultTextView.text = evaluateExpression(realtimeEvaluationString).toString()
+        }
+        else
+        {
+            Log.e("Operator Ending", "Invalid expression: Expression cannot end with an operator!")
+        }
+    }
+
 
     private fun evaluateExpression(expression: String): Double {
         val postfixExpression = infixToPostfix(expression)
@@ -219,6 +235,7 @@ class Calculator(binding: ActivityMainBinding)
             output.add(stack.pop())
         }
 
+        println("Postfix output: " + output)
         return output
     }
 
