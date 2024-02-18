@@ -183,7 +183,13 @@ class Calculator(binding: ActivityMainBinding)
             //this.m_binding.resultTextView.text = infixToPostfix(cleanedExpression).toString()
 
             //testing
-            this.m_resultLabelValue = evaluateExpression(cleanedExpression).toString()
+           // this.m_resultLabelValue = evaluateExpression(cleanedExpression).toString()
+
+            val result = evaluateExpression(cleanedExpression)
+
+            // Check if the result is an integer, and format accordingly
+            this.m_resultLabelValue = intConversionRequirementChecker(result)
+
             this.m_binding.resultTextView.text = this.m_resultLabelValue
         }
         else if (this.m_resultLabelValue.isNotEmpty() &&
@@ -194,18 +200,32 @@ class Calculator(binding: ActivityMainBinding)
             var realtimeEvaluationString = cleanedExpression.dropLast(2) // drop the most recently pressed operator for evaluating the string before that
             println("Realtime String: " + realtimeEvaluationString)
 
-            this.m_binding.resultTextView.text = evaluateExpression(realtimeEvaluationString).toString()
+            val result = evaluateExpression(realtimeEvaluationString)
+
+            realtimeEvaluationString = intConversionRequirementChecker(result)
+
+            this.m_binding.resultTextView.text = realtimeEvaluationString
         }
         else
         {
+            // have to fix wrongful exception trigger on first operator press
             Log.e("Operator Ending", "Invalid expression: Expression cannot end with an operator!")
         }
     }
 
 
     private fun evaluateExpression(expression: String): Double {
+        println("Given Expression: " + expression)
         val postfixExpression = infixToPostfix(expression)
-        return evaluatePostfix(postfixExpression)
+        val result = evaluatePostfix(postfixExpression)
+
+        println("Result: " + result)
+        // Checking if the result is an integer and showing an int only in resultTextView if true
+        if (result % 1 == 0.0) {
+            return result.toInt().toDouble()
+        }
+
+        return result
     }
 
     private fun infixToPostfix(infixExpression: String): List<String>
@@ -311,6 +331,15 @@ class Calculator(binding: ActivityMainBinding)
             .replace(unicodeMultiply, " * ")
             .replace(unicodeSubtract, " - ")
             .replace(unicodePercent, " % ")
+    }
+
+    private fun intConversionRequirementChecker(givenDouble: Double): String
+    {
+        if (givenDouble % 1 == 0.0) {
+           return givenDouble.toInt().toString()
+        } else {
+           return givenDouble.toString()
+        }
     }
 
     private fun showIntermediateResult() {
