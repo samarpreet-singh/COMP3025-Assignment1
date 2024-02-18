@@ -68,17 +68,17 @@ class Calculator(binding: ActivityMainBinding)
 
         if (operator.isNotEmpty())
         {
-            if (this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
+            if (this.m_resultLabelValue.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
             {
                 this.m_resultLabelValue = this.m_resultLabelValue.dropLast(1)
             }
 
             this.m_resultLabelValue += operator
             this.m_binding.resultTextView.text = this.m_resultLabelValue
+            println("Operator: " + this.m_resultLabelValue)
 
             performCalculations()
 
-            println("Operator: " + this.m_resultLabelValue)
         }
     }
 
@@ -174,8 +174,9 @@ class Calculator(binding: ActivityMainBinding)
 
     /* Evaluation function chain begins */
     private fun performCalculations(){
+        // equals button will usually only be pressed when the proper full expression has been entered, example 9+3-2 and not 9+3-
         if (this.m_resultLabelValue.isNotEmpty() &&
-            !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
+            !this.m_resultLabelValue.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
         {
             val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
 
@@ -192,11 +193,13 @@ class Calculator(binding: ActivityMainBinding)
 
             this.m_binding.resultTextView.text = this.m_resultLabelValue
         }
+        // this part is to keep evaluating user input as they go and press more operator buttons, just like in real calculators! Also regex makes sure that this gets triggered whenever the operator buttons are pressed too but only after the first calculation has been made
         else if (this.m_resultLabelValue.isNotEmpty() &&
-            this.m_binding.resultTextView.text.matches(Regex(".*[0-9]+[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide][0-9]+.*")))
+            this.m_resultLabelValue.matches(Regex(".*[0-9]+[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide][0-9]+.*")))
         {
             val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
 
+            println("Realtime String before drop: " + cleanedExpression)
             var realtimeEvaluationString = cleanedExpression.dropLast(2) // drop the most recently pressed operator for evaluating the string before that
             println("Realtime String: " + realtimeEvaluationString)
 
@@ -213,17 +216,12 @@ class Calculator(binding: ActivityMainBinding)
         }
     }
 
-
     private fun evaluateExpression(expression: String): Double {
         println("Given Expression: " + expression)
         val postfixExpression = infixToPostfix(expression)
         val result = evaluatePostfix(postfixExpression)
 
         println("Result: " + result)
-        // Checking if the result is an integer and showing an int only in resultTextView if true
-        if (result % 1 == 0.0) {
-            return result.toInt().toDouble()
-        }
 
         return result
     }
@@ -335,21 +333,10 @@ class Calculator(binding: ActivityMainBinding)
 
     private fun intConversionRequirementChecker(givenDouble: Double): String
     {
-        if (givenDouble % 1 == 0.0) {
-           return givenDouble.toInt().toString()
+        return if (givenDouble % 1 == 0.0) {
+            givenDouble.toInt().toString()
         } else {
-           return givenDouble.toString()
+            givenDouble.toString()
         }
     }
-
-    private fun showIntermediateResult() {
-        if (this.m_resultLabelValue.isNotEmpty() &&
-            !this.m_binding.resultTextView.text.matches(Regex(".*[$unicodeAdd$unicodeSubtract$unicodeMultiply$unicodeDivide]\\s*$")))
-        {
-            val cleanedExpression = unicodeOperatorsFormatter(this.m_resultLabelValue)
-            this.m_binding.resultTextView.text = evaluateExpression(cleanedExpression).toString()
-        }
-    }
-
-
 }
