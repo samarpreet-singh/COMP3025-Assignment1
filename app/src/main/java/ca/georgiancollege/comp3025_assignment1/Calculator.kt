@@ -167,7 +167,7 @@ class Calculator(binding: ActivityMainBinding)
             }
             "=" ->
             {
-                // performCalculations code used to be a part of the equals case here. However, I extracted it into its own function when I realized that I could expand upon the same code to handle cases whenever user presses operator buttons and wants to evaluate the string right before the latest pressed operator button. Check performCalculations for more information.
+                // performCalculations code used to be a part of this equals case here. However, I extracted it into its own function when I realized that I could expand upon the same code to handle cases whenever user presses operator buttons and wants to evaluate the string right before the latest pressed operator button. Check performCalculations for more information.
                 performCalculations()
             }
         }
@@ -227,9 +227,10 @@ class Calculator(binding: ActivityMainBinding)
             else ->
             {
                 // if the resultLabelView is already at 0, no need to append the new number, instead replace the 0
-                if (this.m_resultLabelValue == "0")
+                // OR if it is -0, then keep the - but replace the 0 with the new number
+                if (this.m_resultLabelValue == "0" || this.m_resultLabelValue == "-0")
                 {
-                    this.m_resultLabelValue = view.tag.toString()
+                    this.m_resultLabelValue = if (this.m_resultLabelValue == "0") view.tag.toString() else "-" + view.tag.toString()
                 }
                 // else if the last element is a zero, then drop that zero and replace it with the newly pressed number.
                 // for example -> 9+6+0 now when a new number is pressed, let's say 3, it should take the place of 0 instead of being appended like 03
